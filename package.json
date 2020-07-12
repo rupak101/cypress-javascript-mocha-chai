@@ -1,0 +1,32 @@
+{
+  "name": "cypress_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "automation": "^0.0.0",
+    "cypress": "^4.9.0"
+  },
+  "devDependencies": {
+    "cypress-iframe": "^1.0.1",
+    "cypress-multi-reporters": "^1.4.0",
+    "cypress-xpath": "^1.6.0",
+    "mocha": "^5.2.0",
+    "mochawesome": "^4.1.0",
+    "mochawesome-merge": "^4.1.0",
+    "mochawesome-report-generator": "^4.0.1"
+  },
+  "scripts": {
+    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
+    "preheadlessRun": "npm run clean:reports",
+    "headlessRun": "cypress run || npm run posttest",
+    "postheadlessRun": "npm run combine-reports && npm run generate-report",
+    "prechromeBrowserRun": "npm run clean:reports",
+    "chromeBrowserRun": "cypress run --browser chrome",
+    "postchromeBrowserRun": "npm run combine-reports && npm run generate-report",
+    "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",
+    "generate-report": "marge cypress/reports/mochareports/report.json -f report -o cypress/reports/mochareports"
+  },
+  "author": "",
+  "license": "ISC"
+}
