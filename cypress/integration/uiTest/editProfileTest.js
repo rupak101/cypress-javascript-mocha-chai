@@ -9,13 +9,14 @@ describe('Edit user profile', function () {
     beforeEach(function () {
         cy.fixture('dataProvider').then(function (data) {
             this.data = data
+            cy.login(this.data.userName, this.data.password)
         })
     })
 
-    const firstAndLastName = ["test1","QA Assessment Account"]
+    const firstAndLastName = ["test1", "QA Assessment Account"]
     firstAndLastName.forEach(name => {
-        it(`Edit name to ${name} on edit profile page`, function () {
-            cy.login(this.data.userName, this.data.password)
+        it(`Edit name to "${name}" on edit profile page`, function () {
+            //Open edit profile
             cy.editProfile()
             editProfilePage.getUserNameField().clear().type(name)
             //click on submit button
@@ -27,7 +28,7 @@ describe('Edit user profile', function () {
     })
 
     it("Edit profile with invalid email address", function () {
-        cy.login(this.data.userName, this.data.password)
+        //Open edit profile
         cy.editProfile()
         //Enter invalid email address
         editProfilePage.getUserEmailField().clear().type(this.data.invalidEmail)
@@ -40,7 +41,7 @@ describe('Edit user profile', function () {
     })
 
     it("Change language on edit profile", function () {
-        cy.login(this.data.userName, this.data.password)
+        //Open edit profile
         cy.editProfile()
         editProfilePage.getLanguageRadioButton().click()
         //click on submit button
@@ -51,7 +52,7 @@ describe('Edit user profile', function () {
     })
 
     it("User logout from the application", function () {
-        cy.login(this.data.userName, this.data.password)
+        //Click on logout button
         homePage.getLogOutButton().click({ force: true })
         //Validate the logout page
         cy.url().should('include', 'login')
